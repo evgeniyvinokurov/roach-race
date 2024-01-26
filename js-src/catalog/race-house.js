@@ -35,14 +35,14 @@ self.initHorseEvents = function(){
 	self.initHorseEventsRace();
 }
 
-self.initHorseEventsHouse = function(){	
+self.initHorseEventsRace = function(){	
 	let horses = document.querySelectorAll(".race .horse");
 	for(let h of horses){		
 		h.addEventListener("click", clickhorseout);
 	} 		
 }
 
-self.initHorseEventsRace = function(){	
+self.initHorseEventsHouse = function(){	
 	let horsesHouse = document.querySelectorAll(".horse-house .horse");
 	for(let h of horsesHouse){		
 		h.addEventListener("click", clickhorsein);
@@ -52,7 +52,7 @@ self.initHorseEventsRace = function(){
 self.initHorseButtonsEvents = function(){	
 	self.main.startButton.addEventListener("click", function(e){
 		HorseService.start(function(winner){			
-			self.loadHouse()
+			self.loadHouse();
 		})
 	});
 

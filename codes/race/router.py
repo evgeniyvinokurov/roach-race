@@ -2,13 +2,11 @@ from bottle import redirect, route, view, post, request, get, response, auth_bas
 from bottle import static_file
 
 import json
-import os
-import zipfile
-import shutil
 
 from ..race import export
 from ..race import horses
 from ..race import base
+from ..race import race
 
 
 @route('/race/')
@@ -23,7 +21,7 @@ def gethorse():
 
 @post('/horses/race/')
 def gethorse():
-    horsewinner = horses.race()
+    horsewinner = race.race()
     return "{ \"status\": \"ok\", \"horsewinner\":" + json.dumps(horsewinner) + "}"
     
 @post('/horses/out/')
@@ -32,12 +30,12 @@ def horses_out():
 
 @post('/horses/race/in/<horseid>/')
 def racein(horseid):
-    h = horses.racein(horseid) 
+    h = race.racein(horseid) 
     return "{ \"status\": \"ok\", \"horse\": " + json.dumps(h) + "}"
 
 @post('/horses/race/out/<horseid>/')
 def racein(horseid):
-    h = horses.raceout(horseid) 
+    h = race.raceout(horseid) 
     return "{ \"status\": \"ok\", \"horse\": " + json.dumps(h) + "}"
 
     
