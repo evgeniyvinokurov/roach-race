@@ -11,18 +11,18 @@ def race():
     loop = asyncio.get_event_loop()
     races = loop.run_until_complete(raceallhorses())
     
-    max = {}
-    max["time"] = 0
+    min = {}
+    min["time"] = 9999999
 
     for r in races:
-        if r["time"] > max["time"]:
-            max = r
+        if r["time"] < min["time"]:
+            min = r
 
     for r in races:
-        if r["horse"]["id"] != max["horse"]["id"]:
+        if r["horse"]["id"] != min["horse"]["id"]:
             raceout(r["horse"]["id"])
 
-    return max
+    return min
 
 async def raceallhorses():
     horseslist = []
