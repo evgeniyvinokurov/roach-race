@@ -1,0 +1,45 @@
+body {
+	font-size: medium;
+	min-width: 500px;
+	font-family: arial;
+}
+
+.hide {
+	display: none;
+}
+
+
+.button {
+	border-radius: 5px;
+	margin: 10px;
+	padding: 5px;
+	border: 2px solid #3c4036;
+	cursor: pointer;
+	background-color: white;
+	font-size: 16px;
+}
+
+.header {
+	background-color: white;
+	border-bottom: 1px solid #e6e6e6;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 10;
+}
+
+
+
+.race-app {
+	padding: 20px;
+}
+
+
+.horse {
+	display: inline-block;
+	border: solid grey 2px;
+	padding: 10px;
+	margin: 5px;
+	cursor: pointer;
+}

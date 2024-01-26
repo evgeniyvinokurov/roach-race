@@ -1,0 +1,10 @@
+node_modules/*
+__pycache__/*
+codes/race/__pycache__/*
+package-lock.json
+xml/users/*
+!xml/race/notempty
+xml/orders/*
+!xml/horses/notempty
+.vs/
+yarn.lock
