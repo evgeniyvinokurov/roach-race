@@ -43,3 +43,15 @@ body {
 	margin: 5px;
 	cursor: pointer;
 }
+
+.race {
+	padding: 10px;
+}
+
+.horse-house {
+	padding: 10px;
+}
+
+input {
+	margin: 10px;
+}

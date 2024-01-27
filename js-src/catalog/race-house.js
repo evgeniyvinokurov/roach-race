@@ -52,7 +52,7 @@ self.initHorseEventsHouse = function(){
 self.initHorseButtonsEvents = function(){	
 	self.main.startButton.addEventListener("click", function(e){
 		HorseService.start(function(winner){			
-			self.loadHouse();
+			self.loadHouse(false);
 		})
 	});
 
@@ -86,14 +86,16 @@ self.drawHorses = function(horses){
 }
 
 
-self.loadHouse = function(){
+self.loadHouse = function(buttons = true){
 	HorseService.getHorses(function(data){
 		self.main.horseshouse = data.horses;
 		self.main.horsesrace = data.race; 
 							
 		self.drawHouseRace();            
-		self.initHorseEvents();       
-		self.initHorseButtonsEvents();
+		self.initHorseEvents();   
+		
+		if (buttons)    
+			self.initHorseButtonsEvents();
 	});
 }
 
