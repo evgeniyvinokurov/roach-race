@@ -55,3 +55,26 @@ body {
 input {
 	margin: 10px;
 }
+
+.stadium {
+	width: 800px;
+}
+
+.roach .r {
+	transform: rotate(90deg);
+	width: 5px;
+	height: 5px;
+}
+
+.roach .h {
+	transform: scaleX(-1);	
+	width: 5px;
+	height: 5px;
+}
+
+.roach {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	margin-top: 20px;
+}

@@ -1,6 +1,10 @@
 % include('header.html')
 <link rel="stylesheet" type="text/css" href="/static/css/race.css">
+% if started: 
+<div class="race-app started">
+% else:
 <div class="race-app">
+% end 
     <div class="race-container">
 		<label>race:</label><div class="race"></div>
 	</div>
@@ -9,6 +13,8 @@
 	<div class="horse-house-container">
     	<label>house:</label><div class="horse-house"></div>    
 	</div>   
+	<div class="stadium">
+	</div>
 </div>
 <div class="hide" id="templates">
 	<div class="template" id="horse">
@@ -20,6 +26,12 @@
 			<div class="horse-speed">speed:---speed---</div>
 			<div class="horse-history">history:---history---</div>
 			<div class="horse-health">health:---health---</div>
+		</div>
+	</div>	
+	<div class="template" id="roach">
+		<div style="left:---delta---px;" class="roach" id="id---id---" data-src='------'>
+			<div class="horse-number">---number---</div>
+			<div class="---kind---">---pic---</div>
 		</div>
 	</div>
 </div>

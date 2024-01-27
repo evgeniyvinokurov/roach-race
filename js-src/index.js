@@ -8,6 +8,8 @@ self.initElements = function(){
 	self.raceSection = document.querySelector(".race");
 	self.getHorseButton = document.querySelector(".get-horse");
 	self.startButton = document.querySelector(".start");
+	self.stadium = document.querySelector(".stadium");
+	self.app = document.querySelector(".race-app");
 }
 
 self.loadModules = function(){

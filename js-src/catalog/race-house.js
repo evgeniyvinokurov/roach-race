@@ -49,11 +49,54 @@ self.initHorseEventsHouse = function(){
 	} 	
 }
 
+self.drawRoachesHtml = function(horses){
+	let html = "";
+
+	if (horses.length > 0)
+		for (let h of horses) { 
+			let thtml = Templater.templates["roach"];
+			html += Templater.template(thtml, h)
+		}
+
+	return html;
+}
+
+self.drawRoaches = function(state){
+	let roaches = [];
+	for (let r of state) {
+		let roach = {};
+		let delta = r["gotrunned"];
+		roach["id"] = r["id"];
+		roach["delta"] = Math.ceil(delta * 800 / r["race"]);
+		roach["kind"] = r["horse"]["kind"] ? "r" : "h";
+		roach["pic"] = r["horse"]["kind"] ? "&#129715;" : "&#x1F40E;";
+		roach["number"] = r["horse"]["number"];
+		roaches.push(roach);
+	}
+	let rhtml = self.drawRoachesHtml(roaches);
+	self.main.stadium.innerHTML = rhtml;		
+}
+
+let timer = null;
+
+self.race = function(){
+	console.log("race")
+	if (!!timer) return false;
+	timer = setInterval(function(){
+		HorseService.start(function(data){
+			if (data["status"] == "finished"){			
+				clearInterval(timer);
+				timer = null;
+				self.loadHouse(false);
+			} else
+				self.drawRoaches(data.state);
+		})
+	}, 1000)	
+}
+
 self.initHorseButtonsEvents = function(){	
 	self.main.startButton.addEventListener("click", function(e){
-		HorseService.start(function(winner){			
-			self.loadHouse(false);
-		})
+		self.race()	
 	});
 
 	self.main.getHorseButton.addEventListener("click", function(e){
@@ -85,8 +128,7 @@ self.drawHorses = function(horses){
 	return html;
 }
 
-
-self.loadHouse = function(buttons = true){
+self.loadHouse = function(buttons = true){	
 	HorseService.getHorses(function(data){
 		self.main.horseshouse = data.horses;
 		self.main.horsesrace = data.race; 
@@ -96,6 +138,11 @@ self.loadHouse = function(buttons = true){
 		
 		if (buttons)    
 			self.initHorseButtonsEvents();
+
+		if (self.main.app.classList.contains("started") ) {
+			self.main.app.classList.remove("started");
+			self.race();
+		} 
 	});
 }
 
