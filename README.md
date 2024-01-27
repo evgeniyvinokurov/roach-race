@@ -1,9 +1,11 @@
-# horce-race v0.0.1
+# horce-race v0.2.1
   
-Horses race   
+Horses (Roaches) Race   
   
 * /race/ - race page  
   
 mkdir bottleenv  
 python3 -m venv bottleenv  
 source bottleenv/bin/activate  
+  
+pip3 install -r reuirements.txt  
