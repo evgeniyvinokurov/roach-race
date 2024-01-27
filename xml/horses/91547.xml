@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<horse>
+   <id>91547</id>
+   <weight>91</weight>
+   <speed>764</speed>
+   <history>3</history>
+   <health>87</health>
+   <number>71</number>
+   <name>rested-muskox</name>
+   <kind>False</kind>
+</horse>

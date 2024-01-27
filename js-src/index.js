@@ -10,6 +10,8 @@ self.initElements = function(){
 	self.startButton = document.querySelector(".start");
 	self.stadium = document.querySelector(".stadium");
 	self.app = document.querySelector(".race-app");
+	self.cRace = document.querySelector(".horse-house-container");
+	self.cHouse = document.querySelector(".race-container");
 }
 
 self.loadModules = function(){

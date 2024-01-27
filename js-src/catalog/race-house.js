@@ -79,8 +79,7 @@ self.drawRoaches = function(state){
 
 let timer = null;
 
-self.race = function(){
-	console.log("race")
+self.race = function(){	
 	if (!!timer) return false;
 	timer = setInterval(function(){
 		HorseService.start(function(data){
@@ -88,10 +87,26 @@ self.race = function(){
 				clearInterval(timer);
 				timer = null;
 				self.loadHouse(false);
+				self.showHouses();
 			} else
+				self.hideHouses();
 				self.drawRoaches(data.state);
 		})
 	}, 1000)	
+}
+
+self.hideHouses = function(){
+	self.main.cHouse.classList.add("hide");
+	self.main.cRace.classList.add("hide");
+	self.main.getHorseButton.classList.add("hide");
+	self.main.startButton.classList.add("hide");
+}
+
+self.showHouses = function(){
+	self.main.cHouse.classList.remove("hide");
+	self.main.cRace.classList.remove("hide");
+	self.main.getHorseButton.classList.remove("hide");
+	self.main.startButton.classList.remove("hide");
 }
 
 self.initHorseButtonsEvents = function(){	

@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<horse>
+   <id>34965</id>
+   <weight>96</weight>
+   <speed>866</speed>
+   <history>3</history>
+   <health>92</health>
+   <number>86</number>
+   <name>ace-crow</name>
+   <kind>False</kind>
+</horse>
