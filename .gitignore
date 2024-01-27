@@ -8,3 +8,4 @@ xml/orders/*
 !xml/horses/notempty
 .vs/
 yarn.lock
+bottleenv/*
