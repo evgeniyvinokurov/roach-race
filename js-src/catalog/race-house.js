@@ -100,6 +100,7 @@ self.hideHouses = function(){
 	self.main.cRace.classList.add("hide");
 	self.main.getHorseButton.classList.add("hide");
 	self.main.startButton.classList.add("hide");
+	self.main.cstadium.classList.remove("hide")	
 }
 
 self.showHouses = function(){
@@ -107,6 +108,7 @@ self.showHouses = function(){
 	self.main.cRace.classList.remove("hide");
 	self.main.getHorseButton.classList.remove("hide");
 	self.main.startButton.classList.remove("hide");
+	self.main.cstadium.classList.add("hide")	
 }
 
 self.initHorseButtonsEvents = function(){	
@@ -128,7 +130,9 @@ self.drawHouseRace = function(){
     self.main.horseHouseSection.innerHTML = horsesHtml;    
 
 	let horsesHtmlrace = self.drawHorses(self.main.horsesrace);
-    self.main.raceSection.innerHTML = horsesHtmlrace;    
+    self.main.raceSection.innerHTML = horsesHtmlrace;	
+	
+	self.main.cstadium.classList.add("hide")	
 }
 
 self.drawHorses = function(horses){

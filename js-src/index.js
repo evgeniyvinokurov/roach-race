@@ -9,6 +9,7 @@ self.initElements = function(){
 	self.getHorseButton = document.querySelector(".get-horse");
 	self.startButton = document.querySelector(".start");
 	self.stadium = document.querySelector(".stadium");
+	self.cstadium = document.querySelector(".cstadium");
 	self.app = document.querySelector(".race-app");
 	self.cRace = document.querySelector(".horse-house-container");
 	self.cHouse = document.querySelector(".race-container");

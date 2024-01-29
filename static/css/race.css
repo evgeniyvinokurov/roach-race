@@ -56,8 +56,28 @@ input {
 	margin: 10px;
 }
 
+.cstadium {
+	position: relative;
+	overflow: hidden;
+}
+
 .stadium {
 	width: 800px;
+	border: 2px solid grey;
+	padding-bottom: 20px;
+	padding-right: 20px;	
+}
+
+.stadium::after {
+	width: 7px;
+	height: 12px;
+	content: "Finish - Finish - Finish - Finish - Finish - Finish - Finish - Finish - Finish - Finish - Finish";
+	word-break: break-word;
+	right: 10px;
+	display: block;
+	left: 800px;
+	position: absolute;
+	top:5px;
 }
 
 .roach .r {
@@ -76,5 +96,10 @@ input {
 	position: relative;
 	width: 20px;
 	height: 20px;
-	margin-top: 20px;
+	padding: 20px;
+}
+
+h1 {
+	margin-left: 10px;
+	font-size: 45px;
 }
