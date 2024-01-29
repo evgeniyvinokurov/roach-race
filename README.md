@@ -1,4 +1,4 @@
-# horce-race v0.2.1
+# horse-race v0.2.1
   
 Horses (Roaches) Race   
   
