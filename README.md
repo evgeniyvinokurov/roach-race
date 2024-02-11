@@ -1,11 +1,9 @@
 # horse-race v0.2.1
   
-Horses (Roaches) Race   
+Скачки (тараканы и лошади)  
   
-* /race/ - race page  
+* /race/ - страница скачек  
   
-mkdir bottleenv  
-python3 -m venv bottleenv  
-source bottleenv/bin/activate  
+**Скачки, работа с асинхронными функциями на питоне   
+**Небольшой веб интерфейс  
   
-pip3 install -r requirements.txt  
