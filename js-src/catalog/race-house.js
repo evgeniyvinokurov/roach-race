@@ -68,8 +68,7 @@ self.drawRoaches = function(state){
 		let delta = r["gotrunned"];
 		roach["id"] = r["id"];
 		roach["delta"] = Math.ceil(delta * 800 / r["race"]);
-		roach["kind"] = r["horse"]["kind"] ? "r" : "h";
-		roach["pic"] = r["horse"]["kind"] ? "&#129715;" : "&#x1F40E;";
+		roach["pic"] = "&#129715;";
 		roach["number"] = r["horse"]["number"];
 		roaches.push(roach);
 	}
@@ -92,7 +91,7 @@ self.race = function(){
 				self.hideHouses();
 				self.drawRoaches(data.state);
 		})
-	}, 1000)	
+	}, 500)	
 }
 
 self.hideHouses = function(){

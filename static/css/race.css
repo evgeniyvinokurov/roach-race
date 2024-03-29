@@ -38,10 +38,12 @@ body {
 
 .horse {
 	display: inline-block;
-	border: solid grey 2px;
+	border: solid lightskyblue 2px;
 	padding: 10px;
 	margin: 5px;
 	cursor: pointer;
+	border-radius: 10px;
+	background-color: lightskyblue;
 }
 
 .race {
@@ -50,6 +52,7 @@ body {
 
 .horse-house {
 	padding: 10px;
+	width: 800px;
 }
 
 input {
@@ -63,22 +66,13 @@ input {
 
 .stadium {
 	width: 800px;
-	border: 2px solid grey;
+	border: 2px solid lightgrey;
 	padding-bottom: 20px;
 	padding-right: 20px;	
+	border-radius: 10px;
+	border-right: 7px dashed black;
 }
 
-.stadium::after {
-	width: 7px;
-	height: 12px;
-	content: "Finish - Finish - Finish - Finish - Finish - Finish - Finish - Finish - Finish - Finish - Finish";
-	word-break: break-word;
-	right: 10px;
-	display: block;
-	left: 800px;
-	position: absolute;
-	top:5px;
-}
 
 .roach .r {
 	transform: rotate(90deg);
@@ -102,4 +96,14 @@ input {
 h1 {
 	margin-left: 10px;
 	font-size: 45px;
+}
+
+.horse-item {
+  display: inline-block;
+  margin: 0px;
+  border-radius: 7px;
+  background-color: cornflowerblue;
+  padding: 5px;
+  color: white;
+  font-size: 15px;
 }

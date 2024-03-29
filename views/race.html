@@ -1,6 +1,6 @@
 % include('header.html')
 <link rel="stylesheet" type="text/css" href="/static/css/race.css">
-<h1>Horses - Roaches - Race</h1>
+<h1>Roaches - Race</h1>
 % if started: 
 <div class="race-app started">
 % else:
@@ -22,19 +22,18 @@
 <div class="hide" id="templates">
 	<div class="template" id="horse">
 		<div class="horse" id="id---id---" data-src='------'>
-			<div class="horse-number">num:---number---</div>
-			<div class="horse-name">---name---</div>
+			<div class="horse-name">---name---:---number---</div>
 			<br/>
-			<div class="horse-weight">weight:---weight---</div>
-			<div class="horse-speed">speed:---speed---</div>
-			<div class="horse-history">history:---history---</div>
-			<div class="horse-health">health:---health---</div>
+			<div class="horse-item horse-weight">🔩 ---weight---</div>
+			<div class="horse-item horse-speed">🚀 ---speed---</div>
+			<div class="horse-item horse-history">🕜 ---history---</div>
+			<div class="horse-item horse-health">🚑 ---health---</div>
 		</div>
 	</div>	
 	<div class="template" id="roach">
 		<div style="left:---delta---px;" class="roach" id="id---id---" data-src='------'>
 			<div class="horse-number">---number---</div>
-			<div class="---kind---">---pic---</div>
+			<div class="r">---pic---</div>
 		</div>
 	</div>
 </div>

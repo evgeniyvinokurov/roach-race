@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<horse>
+   <id>49290</id>
+   <weight>86</weight>
+   <speed>891</speed>
+   <history>2</history>
+   <health>94</health>
+   <number>63</number>
+   <name>fit-yak</name>
+   <kind>True</kind>
+</horse>

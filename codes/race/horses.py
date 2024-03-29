@@ -15,7 +15,6 @@ def getnewhorse():
     h["health"] = random.randint(80,99)
     h["number"] = random.randint(1,99)
     h["name"] = tools.getname()
-    h["kind"] = bool(random.getrandbits(1))
 
     xmlstr = xmlib.object_to_xmlstr(h, "horse")
     file = base.horsespath + str(h["id"]) + ".xml"
