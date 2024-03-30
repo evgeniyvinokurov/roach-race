@@ -5,7 +5,7 @@ from ..race import base
 from ..race import xmlib
 from ..race import tools
 
-def getnewhorse():
+def getnewroach():
     h = {}
 
     h["id"] = random.randint(10000,99999)
@@ -16,36 +16,36 @@ def getnewhorse():
     h["number"] = random.randint(1,99)
     h["name"] = tools.getname()
 
-    xmlstr = xmlib.object_to_xmlstr(h, "horse")
-    file = base.horsespath + str(h["id"]) + ".xml"
+    xmlstr = xmlib.object_to_xmlstr(h, "roach")
+    file = base.roachespath + str(h["id"]) + ".xml"
     xmlib.writefile(file, xmlstr)
 
     return h
 
-def gethorse(hid):
-    for file in os.listdir(base.horsespath):
-        filexml = base.horsespath + str(hid) +".xml"
+def getroach(hid):
+    for file in os.listdir(base.roachespath):
+        filexml = base.roachespath + str(hid) +".xml"
         if (hid +".xml") in file:
             h = xmlib.xmlfile(filexml)
-            hd = xmlib.xml_to_dict(h, "horse")
+            hd = xmlib.xml_to_dict(h, "roach")
             return hd
 
     for file in os.listdir(base.racepath):
         filexml = base.racepath + str(hid) +".xml"
         if (hid +".xml") in file:
             h = xmlib.xmlfile(filexml)
-            hd = xmlib.xml_to_dict(h, "horse")
+            hd = xmlib.xml_to_dict(h, "roach")
             return hd
 
-def save(horse):
-    file = base.horsespath + str(horse["id"]) + ".xml"
-    xmlstr = xmlib.object_to_xmlstr(horse, "horse")
+def save(roach):
+    file = base.roachespath + str(roach["id"]) + ".xml"
+    xmlstr = xmlib.object_to_xmlstr(roach, "roach")
     xmlib.writefile(file, xmlstr)
 
-def winner(horse):
-    file = base.racepath + str(horse["id"]) + ".xml"
-    horse["health"] = int(horse["health"]) + 1
-    if (horse["health"] >= 100):
-        horse["health"] = 100
-    xmlstr = xmlib.object_to_xmlstr(horse, "horse")
+def winner(roach):
+    file = base.racepath + str(roach["id"]) + ".xml"
+    roach["health"] = int(roach["health"]) + 1
+    if (roach["health"] >= 100):
+        roach["health"] = 100
+    xmlstr = xmlib.object_to_xmlstr(roach, "roach")
     xmlib.writefile(file, xmlstr)

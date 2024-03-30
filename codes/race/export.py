@@ -5,13 +5,13 @@ from ..race import base
 from ..race import xmlib
 
 def all():
-    jsonstr = "{ \"horses\": ["
+    jsonstr = "{ \"roaches\": ["
     count = 0
     
-    for file in os.listdir(base.horsespath):
+    for file in os.listdir(base.roachespath):
         if ".xml" in file:
-            xmlfile = xmlib.xmlfile(base.horsespath + file)
-            l = xmlib.xml_to_dict(xmlfile, "horse")
+            xmlfile = xmlib.xmlfile(base.roachespath + file)
+            l = xmlib.xml_to_dict(xmlfile, "roach")
 
             if (count != 0):
                 jsonstr += ","
@@ -23,7 +23,7 @@ def all():
     for file in os.listdir(base.racepath):
         if ".xml" in file:
             xmlfile = xmlib.xmlfile(base.racepath + file)
-            l = xmlib.xml_to_dict(xmlfile, "horse")
+            l = xmlib.xml_to_dict(xmlfile, "roach")
 
             if (count != 0):
                 jsonstr += ","

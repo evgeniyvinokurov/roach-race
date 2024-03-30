@@ -1,87 +1,100 @@
-import { HorseService } from '../services/horseService.js';
+import { roachesService } from '../services/roachesService.js';
 import { Templater } from '../templater.js';
 
 
 let self = {};
 
-let clickhorsein = function(e){
-	let horseId = this.attributes["id"].value.replace("id", "");
-	let selfin = this;
-	HorseService.toRace(function(data){ 
-			if (data.status == "ok") {
-				selfin.remove();
-				let hhtml = self.drawHorses([data.horse]);
-				self.main.raceSection.innerHTML = self.main.raceSection.innerHTML + hhtml;    
-				self.initHorseEventsRace();
-			}
-	}, horseId)
+self.initroachEvents = function(){
+	self.initroachEventsHouse();
+	self.initroachEventsRace();
 }
 
-let clickhorseout = function(e){		
-	let horseId = this.attributes["id"].value.replace("id", "");
-	let selfin = this;
-	HorseService.outRace(function(data){
-		if (data.status == "ok") {
-			selfin.remove();
-			let hhtml = self.drawHorses([data.horse]);
-			self.main.horseHouseSection.innerHTML = self.main.horseHouseSection.innerHTML + hhtml;
-			self.initHorseEventsHouse();
-		}
-	}, horseId)
-};
-
-self.initHorseEvents = function(){
-	self.initHorseEventsHouse();
-	self.initHorseEventsRace();
-}
-
-self.initHorseEventsRace = function(){	
-	let horses = document.querySelectorAll(".race .horse");
-	for(let h of horses){		
-		h.addEventListener("click", clickhorseout);
+self.initroachEventsRace = function(){	
+	let roaches = document.querySelectorAll(".race .roach");
+	for(let h of roaches){		
+		h.addEventListener("click", clickroachout);
 	} 		
 }
 
-self.initHorseEventsHouse = function(){	
-	let horsesHouse = document.querySelectorAll(".horse-house .horse");
-	for(let h of horsesHouse){		
-		h.addEventListener("click", clickhorsein);
+self.initroachEventsHouse = function(){	
+	let roachesHouse = document.querySelectorAll(".roach-house .roach");
+	for(let h of roachesHouse){		
+		h.addEventListener("click", clickroachin);
 	} 	
 }
 
-self.drawRoachesHtml = function(horses){
-	let html = "";
+self.initroachButtonsEvents = function(){	
+	self.main.startButton.addEventListener("click", function(e){
+		self.race()	
+	});
 
-	if (horses.length > 0)
-		for (let h of horses) { 
-			let thtml = Templater.templates["roach"];
-			html += Templater.template(thtml, h)
+	self.main.getroachButton.addEventListener("click", function(e){
+		roachesService.getroach(function(data){
+			let roachHtml = self.drawRoachesHtml([data.roach])
+			self.main.roachHouseSection.innerHTML = self.main.roachHouseSection.innerHTML  + roachHtml; 
+			self.initroachEventsHouse();
+		})
+	});
+}
+
+
+// load
+self.loadHouse = function(buttons = true){	
+	roachesService.getroaches(function(data){
+		self.main.roacheshouse = data.roaches;
+		self.main.roachesrace = data.race; 
+							
+		self.drawHouseRace();            
+		self.initroachEvents();   
+		
+		if (buttons)    
+			self.initroachButtonsEvents();
+
+		if (self.main.app.classList.contains("started") ) {
+			self.main.app.classList.remove("started");
+			self.race();
+		} 
+	});
+}
+
+
+// click events
+
+let clickroachin = function(e){
+	let roachId = this.attributes["id"].value.replace("id", "");
+	let selfin = this;
+	roachesService.toRace(function(data){ 
+			if (data.status == "ok") {
+				selfin.remove();
+				let hhtml = self.drawRoachesHtml([data.roach]);
+				self.main.raceSection.innerHTML = self.main.raceSection.innerHTML + hhtml;    
+				self.initroachEventsRace();
+			}
+	}, roachId)
+}
+
+let clickroachout = function(e){		
+	let roachId = this.attributes["id"].value.replace("id", "");
+	let selfin = this;
+	roachesService.outRace(function(data){
+		if (data.status == "ok") {
+			selfin.remove();
+			let hhtml = self.drawRoachesHtml([data.roach]);
+			self.main.roachHouseSection.innerHTML = self.main.roachHouseSection.innerHTML + hhtml;
+			self.initroachEventsHouse();
 		}
-
-	return html;
-}
-
-self.drawRoaches = function(state){
-	let roaches = [];
-	for (let r of state) {
-		let roach = {};
-		let delta = r["gotrunned"];
-		roach["id"] = r["id"];
-		roach["delta"] = Math.ceil(delta * 800 / r["race"]);
-		roach["pic"] = "&#129715;";
-		roach["number"] = r["horse"]["number"];
-		roaches.push(roach);
-	}
-	let rhtml = self.drawRoachesHtml(roaches);
-	self.main.stadium.innerHTML = rhtml;		
-}
+	}, roachId)
+};
 
 let timer = null;
+
+
+// race method
 
 self.race = function(){	
 	if (!!timer) return false;
 	timer = setInterval(function(){
-		HorseService.start(function(data){
+		roachesService.start(function(data){
 			if (data["status"] == "finished"){			
 				clearInterval(timer);
 				timer = null;
@@ -89,15 +102,69 @@ self.race = function(){
 				self.showHouses();
 			} else
 				self.hideHouses();
-				self.drawRoaches(data.state);
+				self.drawroachesRace(data.state);
 		})
 	}, 500)	
 }
 
+
+// draw html
+
+self.drawHouseRace = function(){
+	let roachesHtml = self.drawRoachesHtml(self.main.roacheshouse);
+    self.main.roachHouseSection.innerHTML = roachesHtml;    
+
+	let roachesHtmlrace = self.drawRoachesHtml(self.main.roachesrace);
+    self.main.raceSection.innerHTML = roachesHtmlrace;	
+	
+	self.main.cstadium.classList.add("hide")	
+}
+
+self.drawRoachesRaceHtml = function(roaches){
+	let html = "";
+
+	if (roaches.length > 0)
+		for (let h of roaches) { 
+			let thtml = Templater.templates["roach-race"];
+			html += Templater.template(thtml, h)
+		}
+
+	return html;
+}
+
+self.drawRoachesHtml = function(roaches){
+	let html = "";
+
+	if (roaches.length > 0)
+		for (let h of roaches) { 
+			let thtml = Templater.templates["roach"];
+			html += Templater.template(thtml, h)
+		}
+
+	return html;
+}
+
+self.drawroachesRace = function(state){
+	let roaches = [];
+	for (let r of state) {
+		let roach = {};
+		let delta = r["gotrunned"];
+		roach["id"] = r["id"];
+		roach["delta"] = Math.ceil(delta * 800 / r["race"]);
+		roach["pic"] = "&#129715;";
+		roach["number"] = r["roach"]["number"];
+		roaches.push(roach);
+	}
+	let rhtml = self.drawRoachesRaceHtml(roaches);
+	self.main.stadium.innerHTML = rhtml;		
+}
+
+// show hide containers
+
 self.hideHouses = function(){
 	self.main.cHouse.classList.add("hide");
 	self.main.cRace.classList.add("hide");
-	self.main.getHorseButton.classList.add("hide");
+	self.main.getroachButton.classList.add("hide");
 	self.main.startButton.classList.add("hide");
 	self.main.cstadium.classList.remove("hide")	
 }
@@ -105,63 +172,9 @@ self.hideHouses = function(){
 self.showHouses = function(){
 	self.main.cHouse.classList.remove("hide");
 	self.main.cRace.classList.remove("hide");
-	self.main.getHorseButton.classList.remove("hide");
+	self.main.getroachButton.classList.remove("hide");
 	self.main.startButton.classList.remove("hide");
 	self.main.cstadium.classList.add("hide")	
-}
-
-self.initHorseButtonsEvents = function(){	
-	self.main.startButton.addEventListener("click", function(e){
-		self.race()	
-	});
-
-	self.main.getHorseButton.addEventListener("click", function(e){
-		HorseService.getHorse(function(data){
-			let horseHtml = self.drawHorses([data.horse])
-			self.main.horseHouseSection.innerHTML = self.main.horseHouseSection.innerHTML  + horseHtml; 
-			self.initHorseEventsHouse();
-		})
-	});
-}
-
-self.drawHouseRace = function(){
-	let horsesHtml = self.drawHorses(self.main.horseshouse);
-    self.main.horseHouseSection.innerHTML = horsesHtml;    
-
-	let horsesHtmlrace = self.drawHorses(self.main.horsesrace);
-    self.main.raceSection.innerHTML = horsesHtmlrace;	
-	
-	self.main.cstadium.classList.add("hide")	
-}
-
-self.drawHorses = function(horses){
-	let html = "";
-
-	if (horses.length > 0)
-		for (let h of horses) { 
-			let thtml = Templater.templates["horse"];
-			html += Templater.template(thtml, h)
-		}
-
-	return html;
-}
-
-self.loadHouse = function(buttons = true){	
-	HorseService.getHorses(function(data){
-		self.main.horseshouse = data.horses;
-		self.main.horsesrace = data.race; 
-							
-		self.drawHouseRace();            
-		self.initHorseEvents();   
-		
-		if (buttons)    
-			self.initHorseButtonsEvents();
-
-		if (self.main.app.classList.contains("started") ) {
-			self.main.app.classList.remove("started");
-			self.race();
-		} 
-	});
 }
 
 self.pinModule = function(main){

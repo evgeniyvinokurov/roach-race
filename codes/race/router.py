@@ -4,7 +4,7 @@ from bottle import static_file
 import json
 
 from ..race import export
-from ..race import horses
+from . import roaches
 from ..race import race
 from ..race import entry
 
@@ -20,12 +20,12 @@ def catalog(name='World'):
         param["started"] = False
     return param   
 
-@post('/horses/get/')
-def gethorse():
-    horse = horses.getnewhorse()
-    return "{ \"status\": \"ok\", \"horse\":" + json.dumps(horse) + "}"
+@post('/roaches/get/')
+def getroach():
+    roach = roaches.getnewroach()
+    return "{ \"status\": \"ok\", \"roach\":" + json.dumps(roach) + "}"
 
-@post('/horses/race/')
+@post('/roaches/race/')
 def racemain():
     state = race.racestep()
 
@@ -34,19 +34,19 @@ def racemain():
     else:
         return "{ \"status\": \"state\", \"state\":" + json.dumps(state["races"]) + "}"
     
-@post('/horses/out/')
-def horses_out():
+@post('/roaches/out/')
+def roaches_out():
     return export.all()
 
-@post('/horses/race/in/<horseid>/')
-def racein(horseid):
-    h = race.racein(horseid) 
-    return "{ \"status\": \"ok\", \"horse\": " + json.dumps(h) + "}"
+@post('/roaches/race/in/<roachid>/')
+def racein(roachid):
+    h = race.racein(roachid) 
+    return "{ \"status\": \"ok\", \"roach\": " + json.dumps(h) + "}"
 
-@post('/horses/race/out/<horseid>/')
-def racein(horseid):
-    h = race.raceout(horseid) 
-    return "{ \"status\": \"ok\", \"horse\": " + json.dumps(h) + "}"
+@post('/roaches/race/out/<roachid>/')
+def racein(roachid):
+    h = race.raceout(roachid) 
+    return "{ \"status\": \"ok\", \"roach\": " + json.dumps(h) + "}"
 
     
 
