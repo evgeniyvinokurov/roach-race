@@ -3,10 +3,10 @@ from bottle import static_file
 
 import json
 
-from ..race import export
+from . import export
 from . import roaches
-from ..race import race
-from ..race import entry
+from . import race
+from . import entry
 
 
 @route('/race/')

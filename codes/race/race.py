@@ -4,11 +4,12 @@ import shutil
 import asyncio
 import math
 
-from ..race import base
-from ..race import xmlib
+from . import base
 from . import roaches
-from ..race import weather
-from ..race import entry
+from . import weather
+from . import entry
+
+from ..classes.xmlib import XmlLib
 
 def racestep():
     result = {}
@@ -23,8 +24,8 @@ def racestep():
         
         for file in os.listdir(base.racepath):
             if ".xml" in file:
-                xmlfile = xmlib.xmlfile(base.racepath + file)
-                h = xmlib.xml_to_dict(xmlfile, "roach")
+                xmlfile = XmlLib.xmlfile(base.racepath + file)
+                h = XmlLib.xml_to_dict(xmlfile, "roach")
                 races.append( {"time": time, "roach": h, "finish": False, "race": race, "gotrunned": gotrunned, "id": h["id"]})
 
     loop = asyncio.get_event_loop()

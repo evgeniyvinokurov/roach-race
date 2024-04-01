@@ -1,8 +1,9 @@
 import json
 import os
 
-from ..race import base
-from ..race import xmlib
+from . import base
+
+from ..classes.xmlib import XmlLib
 
 def all():
     jsonstr = "{ \"roaches\": ["
@@ -10,8 +11,8 @@ def all():
     
     for file in os.listdir(base.roachespath):
         if ".xml" in file:
-            xmlfile = xmlib.xmlfile(base.roachespath + file)
-            l = xmlib.xml_to_dict(xmlfile, "roach")
+            xmlfile = XmlLib.xmlfile(base.roachespath + file)
+            l = XmlLib.xml_to_dict(xmlfile, "roach")
 
             if (count != 0):
                 jsonstr += ","
@@ -22,8 +23,8 @@ def all():
     count = 0
     for file in os.listdir(base.racepath):
         if ".xml" in file:
-            xmlfile = xmlib.xmlfile(base.racepath + file)
-            l = xmlib.xml_to_dict(xmlfile, "roach")
+            xmlfile = XmlLib.xmlfile(base.racepath + file)
+            l = XmlLib.xml_to_dict(xmlfile, "roach")
 
             if (count != 0):
                 jsonstr += ","
