@@ -7,6 +7,8 @@ from . import export
 from . import roaches
 from . import race
 from . import entry
+from . import users
+from . import bets
 
 
 @route('/race/')
@@ -48,7 +50,26 @@ def racein(roachid):
     h = race.raceout(roachid) 
     return "{ \"status\": \"ok\", \"roach\": " + json.dumps(h) + "}"
 
-    
+@post('/user/in/')
+def user_in():
+    u = {}
+    for key, value in request.forms.allitems():
+        u[key] = value
+    user = users.login(u)
+    return '{"user": ' + json.dumps(user) + '}'
+
+@post('/bet/')
+def bet():
+    b = {}
+    for key, value in request.forms.allitems():
+        b[key] = value
+    result = bets.bet(b)
+    return '{"result": ' + json.dumps(result) + '}'
+
+@post('/bets/')
+def betsall():
+    allbets = bets.all()
+    return '{"bets": ' + json.dumps(allbets) + '}'
 
 # ...
 

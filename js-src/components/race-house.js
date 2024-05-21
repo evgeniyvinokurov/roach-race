@@ -1,4 +1,7 @@
 import { roachesService } from '../services/roachesService.js';
+import { usersService } from '../services/usersService.js';
+import { betService } from '../services/betService.js';
+
 import { Templater } from '../templater.js';
 
 
@@ -12,7 +15,12 @@ self.initroachEvents = function(){
 self.initroachEventsRace = function(){	
 	let roaches = document.querySelectorAll(".race .roach");
 	for(let h of roaches){		
-		h.addEventListener("click", clickroachout);
+		h.addEventListener("click", clickroachbet);
+	}	
+
+	let roachesBetMenus = document.querySelectorAll(".race .roach .roach-remove");
+	for(let b of roachesBetMenus){		
+		b.addEventListener("click", clickroachout);
 	} 		
 }
 
@@ -24,9 +32,44 @@ self.initroachEventsHouse = function(){
 }
 
 self.initroachButtonsEvents = function(){	
+	self.main.emailOkEl.addEventListener("click", function(e){	
+		e.stopPropagation();
+		let email = self.main.emailEl.value;
+		
+        usersService.postEmail(email, function(user){
+            self.main.email = user.email;            
+            self.main.showEmail(user);
+
+			betService.bets(function(bets){
+				self.main.bets = bets;
+				self.drawBets();
+			})
+        })
+	});
+
 	self.main.startButton.addEventListener("click", function(e){
 		self.race()	
 	});
+
+	let bets = document.querySelectorAll(".menu-bet .menu-item");
+	for (let bet of bets){
+		bet.addEventListener("click", function(e){
+			e.stopPropagation();
+
+			let betamount = this.attributes["data-bet"].value;
+			let roach = self.main.currentRoach;
+
+			betService.bet({bet: betamount, roach: roach["id"], user: self.main.user.id}, function(user){
+				bet.parentElement.classList.add("hide")
+				self.main.bets.push({bet: betamount, roach: roach["number"]  + ":" + roach["name"]});				
+			})
+
+			betService.bets(function(bets){
+				self.main.bets = bets;
+				self.drawBets();
+			})
+		})
+	}
 
 	self.main.getroachButton.addEventListener("click", function(e){
 		roachesService.getroach(function(data){
@@ -35,10 +78,17 @@ self.initroachButtonsEvents = function(){
 			self.initroachEventsHouse();
 		})
 	});
+
+	self.main.menuBetEl.addEventListener("mouseleave", function(e){
+		e.stopPropagation();
+		self.main.menuBetEl.classList.add("hide");
+	})
+	
 }
 
 
 // load
+
 self.loadHouse = function(buttons = true){	
 	roachesService.getroaches(function(data){
 		self.main.roacheshouse = data.roaches;
@@ -71,11 +121,41 @@ let clickroachin = function(e){
 				self.initroachEventsRace();
 			}
 	}, roachId)
+
+	betService.bets(function(bets){
+		self.main.bets = bets;
+		self.drawBets();
+	})
+}
+
+let clickroachbet = function(e){
+	e.stopPropagation();
+
+	let bets = document.querySelectorAll(".menu-bet .menu-item")
+	for (let bet of bets) {
+		let amount = bet.attributes["data-bet"];
+		if (self.main.user.money*1 < amount.value*1) {
+			bet.classList.add("hide");
+		}
+		console.log(this.attributes["data-src"])
+		self.main.currentRoach = JSON.parse(unescape(this.attributes["data-src"].value));
+	}
+
+	if (self.main.user != null) {
+		let roachId = this.attributes["id"].value.replace("id", "");
+
+		self.main.menuBetEl.classList.remove("hide");
+		self.main.menuBetEl.style.top = (e.y*1 - 10) + "px";
+		self.main.menuBetEl.style.left = (e.x*1 + 10) + "px";
+	}
 }
 
 let clickroachout = function(e){		
-	let roachId = this.attributes["id"].value.replace("id", "");
-	let selfin = this;
+	e.stopPropagation();
+
+	let roachId = this.parentElement.parentElement.attributes["id"].value.replace("id", "");
+	let selfin = this.parentElement.parentElement;
+
 	roachesService.outRace(function(data){
 		if (data.status == "ok") {
 			selfin.remove();
@@ -96,13 +176,26 @@ self.race = function(){
 	timer = setInterval(function(){
 		roachesService.start(function(data){
 			if (data["status"] == "finished"){			
+				self.main.user.money = data["winner"]["user"]["money"];						
+				self.main.showEmail(self.main.user);	
+				self.main.bets = [];				
+
 				clearInterval(timer);
+
 				timer = null;
+
 				self.loadHouse(false);
 				self.showHouses();
-			} else
+				self.drawBets();
+			} else {
 				self.hideHouses();
 				self.drawroachesRace(data.state);
+			}
+		})
+
+		betService.bets(function(bets){
+			self.main.bets = bets;
+			self.drawBets();
 		})
 	}, 500)	
 }
@@ -110,7 +203,17 @@ self.race = function(){
 
 // draw html
 
-self.drawHouseRace = function(){
+self.drawBets = function(){	
+	let betsHtml = self.drawbetsHtml();
+    self.main.betContainerEl.innerHTML = betsHtml;    
+}
+
+self.drawHouseRace = function(){	
+	let bets = document.querySelectorAll(".menu-bet .menu-item");
+	for (let bet of bets) {
+		bet.classList.remove("hide");	
+	}
+
 	let roachesHtml = self.drawRoachesHtml(self.main.roacheshouse);
     self.main.roachHouseSection.innerHTML = roachesHtml;    
 
@@ -118,6 +221,20 @@ self.drawHouseRace = function(){
     self.main.raceSection.innerHTML = roachesHtmlrace;	
 	
 	self.main.cstadium.classList.add("hide")	
+}
+
+self.drawbetsHtml = function(){
+	let html = "";
+
+	if (self.main.bets.length > 0)
+		for (let b of self.main.bets) { 
+			let bet = b;
+			bet["roachstr"] = b["roach"]["number"] + "-" + b["roach"]["name"];
+			let thtml = Templater.templates["bet"];
+			html += Templater.template(thtml, bet);
+		}
+
+	return html;
 }
 
 self.drawRoachesRaceHtml = function(roaches){

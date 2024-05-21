@@ -8,6 +8,7 @@ from . import base
 from . import roaches
 from . import weather
 from . import entry
+from . import bets
 
 from ..classes.xmlib import XmlLib
 
@@ -48,6 +49,8 @@ def racestep():
 
             roaches.winner(min["roach"])
             result["winner"] = min
+            winner = bets.winner(result["winner"])
+            result["winner"] = winner
             result["status"] = "finished"
             entry.clear() 
             return result;

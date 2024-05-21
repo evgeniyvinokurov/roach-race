@@ -1,28 +1,43 @@
 % include('header.html')
 <link rel="stylesheet" type="text/css" href="/static/css/race.css">
 <h1>Roaches - Race</h1>
+
 % if started: 
 <div class="race-app started">
 % else:
 <div class="race-app">
 % end 
-    <div class="race-container">
+	<div class="email-container">
+		<div class="email-view-container hide"><span>Hello, </span><span class="email-view"></span>!</div>
+		<div class="money-view-container hide"><span>You got </span><span class="money-view"></span> pistoles</div>
+		<div><input class="email" type="email" placeholder="Your email :)"></input></div>
+		<div><input class="email-ok" type="submit" value="Ok"></input></div>
+	</div>
+    <div class="race-container bordered">
 		<label>ready for race:</label><div class="race"></div>
 	</div>
     <input class="get-roach" type="button" value="get roach"/>  
     <input class="start" type="button" value="start"/> 
-	<div class="roach-house-container">
+	<div class="roach-house-container bordered">
     	<label>house:</label><div class="roach-house"></div>    
 	</div>   
 	<div class="cstadium">
 		<div class="stadium">
 		</div>
 	</div>
+	<div class="bets-container">
+	</div>
+</div>
+<div class="menu-bet hide">
+	<div class="menu-item" data-bet="100">100 pistols</div>
+	<div class="menu-item" data-bet="200">200 pistols</div>
+	<div class="menu-item" data-bet="500">500 pistols</div>
+	<div class="menu-item" data-bet="all">all your pistols</div>
 </div>
 <div class="hide" id="templates">
 	<div class="template" id="roach">
 		<div class="roach" id="id---id---" data-src='------'>
-			<div class="roach-name">---name---:---number---</div>
+			<div class="roach-name">---name---:---number---<span class="roach-remove">✕</span></div>
 			<br/>
 			<div class="roach-item roach-weight">🔩 ---weight---</div>
 			<div class="roach-item roach-speed">🚀 ---speed---</div>
@@ -34,6 +49,11 @@
 		<div style="left:---delta---px;" class="roach-race" id="id---id---" data-src='------'>
 			<div class="roach-number">---number---</div>
 			<div class="r">---pic---</div>
+		</div>
+	</div>
+	<div class="template" id="bet">
+		<div class="bet" id="id---id---" data-src='------'>
+			<span class="bet-roach">---roachstr---</span>: <span class="bet-amount">---bet--- pistols</span>
 		</div>
 	</div>
 </div>
