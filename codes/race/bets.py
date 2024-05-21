@@ -56,6 +56,9 @@ def winner(winner):
                 else:
                     user["money"] = int(user["money"]) - int(b["bet"])
                 roachwinner["user"] = user
+                
+                userxmlstr = XmlLib.object_to_xmlstr(user, "user")
+                XmlLib.writefile(base.userspath + str(user["id"]) + ".xml", userxmlstr)
 
     
     for file in os.listdir(base.betspath):
