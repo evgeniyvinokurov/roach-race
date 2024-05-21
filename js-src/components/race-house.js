@@ -176,8 +176,10 @@ self.race = function(){
 	timer = setInterval(function(){
 		roachesService.start(function(data){
 			if (data["status"] == "finished"){			
-				self.main.user.money = data["winner"]["user"]["money"];						
-				self.main.showEmail(self.main.user);	
+				if (self.main.user != null){
+					self.main.user.money = data["winner"]["user"]["money"];						
+					self.main.showEmail(self.main.user);	
+				}
 				self.main.bets = [];				
 
 				clearInterval(timer);
