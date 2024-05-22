@@ -32,7 +32,7 @@ def bet(b):
 
     return "ok"
 
-def winner(winner):
+def winner(winner, count):
     roachwinner = winner
 
     for file in os.listdir(base.betspath):
@@ -43,9 +43,9 @@ def winner(winner):
 
             if b["roach"] == winner["id"]:
                 if b["bet"] == "all":
-                    user["money"] = int(user["money"]) * 5
+                    user["money"] = int(user["money"]) * count
                 else:
-                    user["money"] = int(user["money"]) + int(b["bet"])
+                    user["money"] = int(user["money"]) + int(b["bet"]) * (count -1)
                 roachwinner["user"] = user
 
                 userxmlstr = XmlLib.object_to_xmlstr(user, "user")

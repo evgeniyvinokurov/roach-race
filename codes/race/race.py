@@ -49,11 +49,11 @@ def racestep():
 
             roaches.winner(min["roach"])
             result["winner"] = min
-            winner = bets.winner(result["winner"])
+            winner = bets.winner(result["winner"], len(races))
             result["winner"] = winner
             result["status"] = "finished"
             entry.clear() 
-            return result;
+            return result
         
     entry.save(races)
     result["races"] = races
