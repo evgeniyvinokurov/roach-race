@@ -16,6 +16,7 @@ from . import bets
 def catalog(name='World'):
     entries = entry.get()
     param = {}
+    param["top"] = users.top()
     if len(entries) != 0:
         param["started"] = True
     else:

@@ -1,6 +1,8 @@
 import random
 import os
 
+from operator import attrgetter
+
 from ..classes.xmlib import XmlLib
 from . import base
 
@@ -35,3 +37,35 @@ def getbyid(id):
             if u["id"] == id:
                 return u 
     return False    
+
+def uglify(email):
+    s = [*email]
+    l = len(email)
+    for i in range(0, int(abs(l/2.5))):
+        j = random.choice(range(0,l))
+        s[j] = "*"
+    return "".join(s)
+
+def top():
+    users = []
+    top = []
+    count = 0
+
+    for file in os.listdir(base.userspath):
+        if ".xml" in file:            
+            xmlfile = XmlLib.xmlfile(base.userspath + file)            
+            u = XmlLib.xml_to_dict(xmlfile, "user")
+            users.append(u)
+
+    users = sorted(users, key=lambda student: int(student["money"]), reverse=True)
+
+    for u in users:
+        if count < 3:
+            user = {}
+            user["email"] = uglify(u["email"])
+            user["money"] = u["money"]
+            top.append(user)
+            count = count + 1
+
+
+    return top

@@ -1,7 +1,7 @@
 {
-  "name": "xmled",
-  "version": "0.3.0",
-  "description": "Basic xml-based foundation for e-shop. Bottle python an Vue.js frontend",
+  "name": "roach-race",
+  "version": "0.5.2",
+  "description": "Roach race. Xml engine",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,7 @@
   "keywords": [
     "demo"
   ],
-  "author": "evgeniivi",
+  "author": "evgeniyvinokurov",
   "license": "ISC",
   "dependencies": {
     "webpack": "^5.89.0",

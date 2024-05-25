@@ -27,12 +27,17 @@
 	</div>
 	<div class="bets-container bordered">
 	</div>
+	<div class="top bordered">
+		% for u in top:
+		<div class="top-item">{{ u["email"] }}: {{ u["money"]}} pistoles </div>
+		% end
+	</div>
 </div>
 <div class="menu-bet hide">
-	<div class="menu-item" data-bet="100">100 pistols</div>
-	<div class="menu-item" data-bet="200">200 pistols</div>
-	<div class="menu-item" data-bet="500">500 pistols</div>
-	<div class="menu-item" data-bet="all">all your pistols</div>
+	<div class="menu-item" data-bet="100">100 pistoles</div>
+	<div class="menu-item" data-bet="200">200 pistoles</div>
+	<div class="menu-item" data-bet="500">500 pistoles</div>
+	<div class="menu-item" data-bet="all">all your pistoles</div>
 </div>
 <div class="hide" id="templates">
 	<div class="template" id="roach">

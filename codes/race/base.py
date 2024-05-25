@@ -3,6 +3,6 @@ basexmlpath = "./xml"
 roachespath = basexmlpath + "/roaches/"
 racepath = basexmlpath + "/race/"
 entriespath = basexmlpath + "/entries/"
-userspath = basexmlpath + "/users/"
+userspath = basexmlpath + "/raceusers/"
 betspath = basexmlpath + "/bets/"
 
