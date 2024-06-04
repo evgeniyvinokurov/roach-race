@@ -21,8 +21,8 @@ let roachesService = {
 			cb(data)
 		})
 	},
-	start: function(cb){
-        AjaxService.doAjaxPost("/roaches/race/", {}, function(data){			
+	start: function(cb, fdata){
+        AjaxService.doAjaxPost("/roaches/race/", fdata, function(data){			
 			cb(data)
 		})
 	}

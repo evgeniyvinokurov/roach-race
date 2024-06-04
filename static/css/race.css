@@ -147,3 +147,19 @@ h1 {
 .bordered {
 	margin-top: 10px;;
 }
+
+
+.item {
+	display: inline-block;
+	padding: 5px;
+	margin: 10px;
+  }
+
+  .item div {
+	margin-top: 4px;
+  }
+  
+  .item-buy {
+	float: right;
+	cursor: pointer;
+  }

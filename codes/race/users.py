@@ -29,6 +29,11 @@ def get(email):
                 return u 
     return False    
 
+def save(u):     
+    userxmlstr = XmlLib.object_to_xmlstr(u, "user")
+    XmlLib.writefile(base.userspath + str(u["id"]) + ".xml", userxmlstr)
+    return u  
+
 def getbyid(id): 
     for file in os.listdir(base.userspath):
         if ".xml" in file:            

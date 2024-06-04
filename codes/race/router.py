@@ -9,11 +9,13 @@ from . import race
 from . import entry
 from . import users
 from . import bets
+from . import shop
+from . import bought
 
 
 @route('/race/')
 @view('race')
-def catalog(name='World'):
+def catalog():
     entries = entry.get()
     param = {}
     param["top"] = users.top()
@@ -23,6 +25,25 @@ def catalog(name='World'):
         param["started"] = False
     return param   
 
+@route('/shop/')
+@view('shop')
+def shops():
+    param = {}    
+    return param   
+
+@post('/shop/get/')
+def getitems():
+    items = shop.get()    
+    return "{ \"status\": \"ok\", \"items\":" + json.dumps(items) + "}"
+
+@post('/shop/buy/')
+def buy():  
+    b = {}
+    for key, value in request.forms.allitems():
+        b[key] = value
+    result = shop.buy(b)    
+    return "{ \"status\": \"ok\", \"result\":" + json.dumps(result) + "}"
+
 @post('/roaches/get/')
 def getroach():
     roach = roaches.getnewroach()
@@ -30,7 +51,16 @@ def getroach():
 
 @post('/roaches/race/')
 def racemain():
-    state = race.racestep()
+    u = {}
+    user = {}
+    
+    for key, value in request.forms.allitems():
+        u[key] = value
+
+    if "nitro" in u:
+        user = users.getbyid(u["nitro"])
+
+    state = race.racestep(user)
 
     if state["status"] == "finished":
         return "{ \"status\": \"finished\", \"winner\":" + json.dumps(state["winner"]) + "}"

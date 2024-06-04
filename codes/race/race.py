@@ -9,10 +9,12 @@ from . import roaches
 from . import weather
 from . import entry
 from . import bets
+from . import bought
 
 from ..classes.xmlib import XmlLib
 
-def racestep():
+
+def racestep(u):
     result = {}
     result["status"] = "state"
 
@@ -30,7 +32,7 @@ def racestep():
                 races.append( {"time": time, "roach": h, "finish": False, "race": race, "gotrunned": gotrunned, "id": h["id"]})
 
     loop = asyncio.get_event_loop()
-    races = loop.run_until_complete(raceallroaches(races))
+    races = loop.run_until_complete(raceallroaches(races, u))
     
     for r in races:
         if r["finish"]:    
@@ -59,19 +61,26 @@ def racestep():
     result["races"] = races
     return result
 
-async def raceallroaches(races):
+async def raceallroaches(races, u):
     tasks = []
     sem = asyncio.Semaphore(4)
     for h in races:
-        task = asyncio.Task(raceoneroach(h, sem))
+        task = asyncio.Task(raceoneroach(h, sem, u))
         tasks.append(task)
     return await asyncio.gather(*tasks)
 
-async def raceoneroach(h, sem):
+async def raceoneroach(h, sem, u):
+    nitroValue = 0
+
+    ab = bets.all()
+    for b in ab:
+        if "id" in u and b["user"] == u["id"]:
+            if int(h["roach"]["id"]) == int(b["roach"]["id"]):
+                nitroValue = bought.getbuys(u)
     finish = False
     if int(h["gotrunned"]) <= int(h["race"]):
         q = 100 * int(h["roach"]["history"]) / (int(h["race"]) * int(h["roach"]["health"]))
-        h["gotrunned"] = int(h["gotrunned"]) + math.ceil(int(h["roach"]["speed"]) / int(h["roach"]["weight"])) + math.ceil(q) + math.ceil(weather.get())
+        h["gotrunned"] = int(h["gotrunned"]) + math.ceil(int(h["roach"]["speed"]) / int(h["roach"]["weight"])) + math.ceil(q) + math.ceil(weather.get()) + int(nitroValue)
         h["roach"]["history"] = int(h["roach"]["history"]) + 1
         h["time"] = int(h["time"]) + 1
     else:

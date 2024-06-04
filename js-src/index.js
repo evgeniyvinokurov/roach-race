@@ -1,19 +1,13 @@
 import { Templater } from './templater.js';
 
+import { usersService } from './services/usersService.js';
+
 import { RaceHouse } from './components/race-house.js';
+import { Shop } from './components/shop.js';
 
 let self = {};
 
 self.initElements = function(){
-	self.roachHouseSection = document.querySelector(".roach-house");
-	self.raceSection = document.querySelector(".race");
-	self.getroachButton = document.querySelector(".get-roach");
-	self.startButton = document.querySelector(".start");
-	self.stadium = document.querySelector(".stadium");
-	self.cstadium = document.querySelector(".cstadium");
-	self.app = document.querySelector(".race-app");
-	self.cRace = document.querySelector(".roach-house-container");
-	self.cHouse = document.querySelector(".race-container");
 	self.emailEl = document.querySelector(".email");
 	self.emailOkEl = document.querySelector(".email-ok");
 	self.emailViewEl = document.querySelector(".email-view");
@@ -28,7 +22,23 @@ self.initElements = function(){
 self.loadModules = function(){
 	RaceHouse.pinModule(self);	
 	self.RaceHouse = RaceHouse;	
+	self.RaceHouse.loadHouse();		
+
+	Shop.pinModule(self);	
+	self.Shop = Shop;	
 } 
+
+self.initButtonsEvents = function(){	
+	self.emailOkEl.addEventListener("click", function(e){	
+		e.stopPropagation();
+		let email = self.emailEl.value;
+		
+        usersService.postEmail(email, function(user){
+            self.email = user.email;            
+            self.showEmail(user);
+        })
+	});
+}
 
 self.showEmail = function(user){	
 	self.user = user;
@@ -48,10 +58,12 @@ let init = function(){
 	
 	self.user = null;
 	self.bets = [];
-
-	self.initElements();		
+	self.nitro = false;
+		
 	self.loadModules();
-	self.RaceHouse.loadHouse();		
+
+	self.initElements();
+	self.initButtonsEvents();
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
