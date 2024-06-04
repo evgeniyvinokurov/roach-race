@@ -1,6 +1,6 @@
 % include('header.html')
 <link rel="stylesheet" type="text/css" href="/static/css/race.css">
-<h1>Roaches - Race</h1>
+<h1>Roaches - Race / <a class="link" href="/shop/">Shop</a></h1>
 
 % if started: 
 <div class="race-app started">
@@ -25,10 +25,10 @@
 		<div class="stadium">
 		</div>
 	</div>
-	<div class="set-nitro bordered">
-		<input type="button">nitro</input>
+	<div class="set-nitro bordered hide">
+		<input type="button" value="Nitro"></input>
 	</div>
-	<div class="bets-container bordered">
+	<div class="bets-container bordered hide">
 	</div>
 	<div class="top bordered">
 		% for u in top:

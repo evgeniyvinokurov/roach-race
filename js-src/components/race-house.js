@@ -17,7 +17,6 @@ self.initElements = function(){
 	self.main.app = document.querySelector(".race-app");
 	self.main.cRace = document.querySelector(".roach-house-container");
 	self.main.cHouse = document.querySelector(".race-container");
-	self.main.nitroEl = document.querySelector(".set-nitro input");
 }
 
 self.initroachEvents = function(){
@@ -39,7 +38,6 @@ self.initroachEventsRace = function(){
 
 	self.main.nitroEl.addEventListener("click", function(){
 		self.main.nitro = true;
-		console.log("NITRO")
 	});
 }
 
@@ -190,6 +188,8 @@ self.race = function(){
 		let nitro = new FormData();
 		if (self.main.nitro) {
 			nitro.append("nitro",  self.main.user["id"]);
+			self.main.nitroContainerEl.classList.add("hide");
+			self.main.nitro = false;
 		}
 
 		roachesService.start(function(data){
@@ -213,7 +213,6 @@ self.race = function(){
 			}
 		}, nitro)
 
-		self.main.nitro = false;
 
 		betService.bets(function(bets){
 			self.main.bets = bets;
@@ -228,6 +227,7 @@ self.race = function(){
 self.drawBets = function(){	
 	let betsHtml = self.drawbetsHtml();
     self.main.betContainerEl.innerHTML = betsHtml;    
+	self.main.betContainerEl.classList.remove("hide")
 }
 
 self.drawHouseRace = function(){	

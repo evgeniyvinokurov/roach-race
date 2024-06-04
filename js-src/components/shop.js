@@ -16,11 +16,13 @@ let buy = function(e, cb){
 	ffdata.append("user", self.main.user.id)
 
 	shopService.buy(ffdata)
+	self.main.msg.innerHTML = "Ok"
 }
 
 
 self.initElements = function(){
 	self.main.itemsContainer = document.querySelector(".items-container");
+	self.main.msg = document.querySelector(".message");
 }
 
 self.initItemsEvents = function(){
@@ -34,12 +36,13 @@ self.initItemsEvents = function(){
 // load
 
 self.loadItems = function(){	 
-    shopService.get(function(data){
-		self.main.items = data.items;
+	if (self.main.itemsContainer)
+		shopService.get(function(data){
+			self.main.items = data.items;
 
-		self.drawItems();            
-		self.initItemsEvents();   
-	});
+			self.drawItems();            
+			self.initItemsEvents();   
+		});
 }
 
 

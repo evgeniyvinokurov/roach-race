@@ -10,6 +10,7 @@ from . import weather
 from . import entry
 from . import bets
 from . import bought
+from . import users
 
 from ..classes.xmlib import XmlLib
 
@@ -77,6 +78,8 @@ async def raceoneroach(h, sem, u):
         if "id" in u and b["user"] == u["id"]:
             if int(h["roach"]["id"]) == int(b["roach"]["id"]):
                 nitroValue = bought.getbuys(u)
+                u["nitro"] = 0
+                users.save(u)
     finish = False
     if int(h["gotrunned"]) <= int(h["race"]):
         q = 100 * int(h["roach"]["history"]) / (int(h["race"]) * int(h["roach"]["health"]))

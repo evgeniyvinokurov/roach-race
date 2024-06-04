@@ -1,6 +1,7 @@
 import { Templater } from './templater.js';
 
 import { usersService } from './services/usersService.js';
+import { betService } from './services/betService.js';
 
 import { RaceHouse } from './components/race-house.js';
 import { Shop } from './components/shop.js';
@@ -17,10 +18,13 @@ self.initElements = function(){
 	self.emailContainerEl = document.querySelector(".email-container");
 	self.menuBetEl = document.querySelector(".menu-bet");
 	self.betContainerEl = document.querySelector(".bets-container");
+	self.nitroEl = document.querySelector(".set-nitro input");
+	self.nitroContainerEl = document.querySelector(".set-nitro");
 }
 
 self.loadModules = function(){
 	RaceHouse.pinModule(self);	
+
 	self.RaceHouse = RaceHouse;	
 	self.RaceHouse.loadHouse();		
 
@@ -42,6 +46,9 @@ self.initButtonsEvents = function(){
 
 self.showEmail = function(user){	
 	self.user = user;
+	if (self.user.nitro && self.user.nitro > 0 && self.nitroContainerEl) {
+		self.nitroContainerEl.classList.remove("hide")
+	}
 
 	self.emailOkEl.classList.add("hide");
 	self.emailEl.classList.add("hide");
@@ -51,6 +58,11 @@ self.showEmail = function(user){
 
 	self.emailViewContainerEl.classList.remove("hide");
 	self.moneyViewContainerEl.classList.remove("hide");
+
+	betService.bets(function(bets){
+		self.bets = bets;
+		self.RaceHouse.drawBets();
+	})
 }
 
 let init = function(){	

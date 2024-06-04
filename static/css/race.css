@@ -8,6 +8,11 @@ body {
 	display: none!important;
 }
 
+.link {
+	text-decoration: none;
+	color: #3c4036;
+}
+
 
 .button {
 	border-radius: 5px;
