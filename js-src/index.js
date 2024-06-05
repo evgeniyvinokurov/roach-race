@@ -46,8 +46,11 @@ self.initButtonsEvents = function(){
 
 self.showEmail = function(user){	
 	self.user = user;
+
 	if (self.user.nitro && self.user.nitro > 0 && self.nitroContainerEl) {
 		self.nitroContainerEl.classList.remove("hide")
+	} else if (self.nitroContainerEl && self.user.nitro == 0) {
+		self.nitroContainerEl.classList.add("hide")
 	}
 
 	self.emailOkEl.classList.add("hide");

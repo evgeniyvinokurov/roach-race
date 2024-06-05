@@ -149,7 +149,6 @@ let clickroachbet = function(e){
 		if (self.main.user.money*1 < amount.value*1) {
 			bet.classList.add("hide");
 		}
-		console.log(this.attributes["data-src"])
 		self.main.currentRoach = JSON.parse(unescape(this.attributes["data-src"].value));
 	}
 
@@ -186,6 +185,7 @@ self.race = function(){
 
 	timer = setInterval(function(){    
 		let nitro = new FormData();
+
 		if (self.main.nitro) {
 			nitro.append("nitro",  self.main.user["id"]);
 			self.main.nitroContainerEl.classList.add("hide");
@@ -194,9 +194,11 @@ self.race = function(){
 
 		roachesService.start(function(data){
 			if (data["status"] == "finished"){			
-				if (self.main.user != null){
-					self.main.user.money = data["winner"]["user"]["money"];						
-					self.main.showEmail(self.main.user);	
+				if (self.main.user != null){ 
+					usersService.postEmail(self.main.user.email, function(user){
+						self.main.email = user.email;            
+						self.main.showEmail(user);
+					})
 				}
 				self.main.bets = [];				
 
