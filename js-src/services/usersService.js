@@ -5,7 +5,7 @@ let usersService = {
     let data = new FormData();
     data.append("email", email);
 
-    AjaxService.doAjaxPost("/user/in/", data, function(data){
+    AjaxService.doAjaxPost("/raceuser/in/", data, function(data){
 			let user = data.user;
 			cb(user)
 		})

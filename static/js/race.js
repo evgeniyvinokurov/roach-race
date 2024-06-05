@@ -86,7 +86,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   usersService: () => (/* binding */ usersService)\n/* harmony export */ });\n/* harmony import */ var _ajaxService_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ajaxService.js */ \"./js-src/services/ajaxService.js\");\n\n\nlet usersService = {\n  postEmail: function(email, cb){\n    let data = new FormData();\n    data.append(\"email\", email);\n\n    _ajaxService_js__WEBPACK_IMPORTED_MODULE_0__.AjaxService.doAjaxPost(\"/user/in/\", data, function(data){\n\t\t\tlet user = data.user;\n\t\t\tcb(user)\n\t\t})\n\t},\n}\n\n\n\n\n//# sourceURL=webpack://roach-race/./js-src/services/usersService.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   usersService: () => (/* binding */ usersService)\n/* harmony export */ });\n/* harmony import */ var _ajaxService_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ajaxService.js */ \"./js-src/services/ajaxService.js\");\n\n\nlet usersService = {\n  postEmail: function(email, cb){\n    let data = new FormData();\n    data.append(\"email\", email);\n\n    _ajaxService_js__WEBPACK_IMPORTED_MODULE_0__.AjaxService.doAjaxPost(\"/raceuser/in/\", data, function(data){\n\t\t\tlet user = data.user;\n\t\t\tcb(user)\n\t\t})\n\t},\n}\n\n\n\n\n//# sourceURL=webpack://roach-race/./js-src/services/usersService.js?");
 
 /***/ }),
 

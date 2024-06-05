@@ -81,7 +81,7 @@ def racein(roachid):
     h = race.raceout(roachid) 
     return "{ \"status\": \"ok\", \"roach\": " + json.dumps(h) + "}"
 
-@post('/user/in/')
+@post('/raceuser/in/')
 def user_in():
     u = {}
     for key, value in request.forms.allitems():
