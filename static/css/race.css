@@ -80,9 +80,11 @@ input {
 
 
 .roach-race .r {
-	transform: rotate(90deg);
 	width: 5px;
 	height: 5px;
+}
+.roach-race .r img {
+	width: 28px;
 }
 
 .roach-race {
