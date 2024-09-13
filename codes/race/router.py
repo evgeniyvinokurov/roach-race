@@ -20,7 +20,11 @@ def catalog():
     param = {}
     param["top"] = users.top()
     if len(entries) != 0:
-        param["started"] = True
+        if roaches.getracecount():
+            param["started"] = True
+        else:
+            entries.clear()
+            param["started"] = False
     else:
         param["started"] = False
     return param   
@@ -51,6 +55,10 @@ def getroach():
 
 @post('/roaches/race/')
 def racemain():
+    if not roaches.getracecount():
+        entry.clear()
+        return "{ \"status\": \"finished\"}"
+
     u = {}
     user = {}
     

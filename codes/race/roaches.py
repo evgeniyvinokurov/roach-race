@@ -23,6 +23,15 @@ def getnewroach():
 
     return h
 
+def getracecount():
+    count = 0
+    for file in os.listdir(base.racepath):
+        if ".xml" in file:
+            count = count + 1
+            if count > 1: 
+                return True
+    return False
+
 def getroach(hid):
     for file in os.listdir(base.roachespath):
         filexml = base.roachespath + str(hid) +".xml"
