@@ -195,7 +195,7 @@ self.race = function(){
 		roachesService.start(function(data){
 			if (data["status"] == "finished"){			
 				if (self.main.user != null){ 
-					usersService.postEmail(self.main.user.email, function(user){
+					usersService.postEmail(function(user){
 						self.main.email = user.email;            
 						self.main.showEmail(user);
 					})

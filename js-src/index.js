@@ -8,6 +8,15 @@ import { Shop } from './components/shop.js';
 
 let self = {};
 
+// возвращает куки с указанным name,
+// или undefined, если ничего не найдено
+self.getCookie = function(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
 self.initElements = function(){
 	self.emailEl = document.querySelector(".email");
 	self.emailOkEl = document.querySelector(".email-ok");
@@ -32,16 +41,11 @@ self.loadModules = function(){
 	self.Shop = Shop;	
 } 
 
-self.initButtonsEvents = function(){	
-	self.emailOkEl.addEventListener("click", function(e){	
-		e.stopPropagation();
-		let email = self.emailEl.value;
-		
-        usersService.postEmail(email, function(user){
-            self.email = user.email;            
-            self.showEmail(user);
-        })
-	});
+self.initUser = function(){		
+	usersService.postEmail(function(user){
+		self.email = user.email;            
+		self.showEmail(user);
+	})
 }
 
 self.showEmail = function(user){	
@@ -78,7 +82,8 @@ let init = function(){
 	self.loadModules();
 
 	self.initElements();
-	self.initButtonsEvents();
+	self.initUser();
+	console.log("done")
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {

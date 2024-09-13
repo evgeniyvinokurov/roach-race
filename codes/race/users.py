@@ -3,18 +3,26 @@ import os
 
 from operator import attrgetter
 
+from bottle import request, response
+
 from ..classes.xmlib import XmlLib
 from . import base
+from . import tools
 
-def login(user):
-    u = {}
-    u["id"] = random.randint(1000000, 9999999)
-    u["email"] = user["email"]
-    u["money"] = 1000
+def login():
+    useremail = request.get_cookie("user")
 
-    uxml = get(u["email"])
-    if uxml is not False:
-        return uxml
+    if useremail == None:
+        u = {}
+        u["id"] = random.randint(1000000, 9999999)
+        u["email"] = tools.getname()
+        u["money"] = 1000
+
+        response.set_cookie("user", u["email"])
+    else:
+        uxml = get(useremail)
+        if uxml is not False:
+            return uxml
 
     userxmlstr = XmlLib.object_to_xmlstr(u, "user")
     XmlLib.writefile(base.userspath + str(u["id"]) + ".xml", userxmlstr)
