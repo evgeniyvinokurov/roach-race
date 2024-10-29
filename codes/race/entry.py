@@ -1,20 +1,21 @@
 import os
+import time
 
 from . import base
 from . import roaches
 
 from ..classes.xmlib import XmlLib
 
-def save(races):
-    for r in races:
-        entry = {}
-        entry["race"] = r["race"]
-        entry["time"] = r["time"]
-        entry["gotrunned"] = r["gotrunned"]
-        entry["id"] = r["id"]            
-        file = base.entriespath + str(r["roach"]["id"]) + ".xml"
-        xmlstr = XmlLib.object_to_xmlstr(entry, "entry")
-        XmlLib.writefile(file, xmlstr)
+def save(r):
+    entry = {}
+    entry["race"] = r["race"]
+    entry["time"] = r["time"]
+    entry["gotrunned"] = r["gotrunned"]
+    entry["id"] = r["id"]            
+    entry["lasttime"] = time.time()
+    file = base.entriespath + str(r["roach"]["id"]) + ".xml"
+    xmlstr = XmlLib.object_to_xmlstr(entry, "entry")
+    XmlLib.writefile(file, xmlstr)
 
 def get():
     entries = []

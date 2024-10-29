@@ -3,6 +3,7 @@ import random
 import shutil
 import asyncio
 import math
+import time
 
 from . import base
 from . import roaches
@@ -23,14 +24,14 @@ def racestep(u):
 
     if len(races) == 0:        
         race = random.randint(4000,7000)
-        time = 0
+        rtime = 0
         gotrunned = 0
         
         for file in os.listdir(base.racepath):
             if ".xml" in file:
                 xmlfile = XmlLib.xmlfile(base.racepath + file)
                 h = XmlLib.xml_to_dict(xmlfile, "roach")
-                races.append( {"time": time, "roach": h, "finish": False, "race": race, "gotrunned": gotrunned, "id": h["id"]})
+                races.append( {"time": rtime, "roach": h, "finish": False, "race": race, "gotrunned": gotrunned, "id": h["id"], "lasttime": 0})
 
     loop = asyncio.get_event_loop()
     races = loop.run_until_complete(raceallroaches(races, u))
@@ -58,7 +59,12 @@ def racestep(u):
             entry.clear() 
             return result
         
-    entry.save(races)
+        lasttime = time.time()
+        delta = lasttime - float(r["lasttime"])
+        print(delta)
+        if delta >= 0.5:
+            entry.save(r)
+
     result["races"] = races
     return result
 
@@ -88,7 +94,7 @@ async def raceoneroach(h, sem, u):
         h["time"] = int(h["time"]) + 1
     else:
         finish = True
-    return {"id": h["roach"]["id"], "time": h["time"], "roach": h["roach"], "finish": finish, "race": h["race"], "gotrunned": h["gotrunned"]}
+    return {"id": h["roach"]["id"], "time": h["time"], "roach": h["roach"], "finish": finish, "race": h["race"], "gotrunned": h["gotrunned"], "lasttime": h["lasttime"]}
 
 def racein(hid):
     roachfile = base.roachespath + str(hid) + ".xml"
