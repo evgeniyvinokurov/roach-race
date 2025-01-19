@@ -22,7 +22,7 @@ def racestep(u):
 
     races = entry.get()
 
-    if len(races) == 0:        
+    if len(races) == 0:
         race = random.randint(4000,7000)
         rtime = 0
         gotrunned = 0
@@ -35,6 +35,7 @@ def racestep(u):
 
     loop = asyncio.get_event_loop()
     races = loop.run_until_complete(raceallroaches(races, u))
+    racesafter = []
     
     for r in races:
         if r["finish"]:    
@@ -64,8 +65,12 @@ def racestep(u):
         print(delta)
         if delta >= 0.5:
             entry.save(r)
+            racesafter.append(r)
 
-    result["races"] = races
+    if len(racesafter) < len(races):
+        racesafter = []
+
+    result["races"] = racesafter
     return result
 
 async def raceallroaches(races, u):

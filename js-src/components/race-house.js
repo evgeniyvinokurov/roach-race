@@ -286,6 +286,9 @@ self.drawRoachesHtml = function(roaches){
 }
 
 self.drawroachesRace = function(state){
+	if (state.length == 0)
+		return false;
+	
 	let roaches = [];
 	for (let r of state) {
 		let roach = {};
