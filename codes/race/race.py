@@ -22,7 +22,7 @@ def racestep(u):
 
     races = entry.get()
 
-    if len(races) == 0:
+    if len(races) == 0:        
         race = random.randint(4000,7000)
         rtime = 0
         gotrunned = 0
@@ -35,7 +35,6 @@ def racestep(u):
 
     loop = asyncio.get_event_loop()
     races = loop.run_until_complete(raceallroaches(races, u))
-    racesafter = []
     
     for r in races:
         if r["finish"]:    
@@ -60,17 +59,8 @@ def racestep(u):
             entry.clear() 
             return result
         
-        lasttime = time.time()
-        delta = lasttime - float(r["lasttime"])
-        print(delta)
-        if delta >= 0.5:
-            entry.save(r)
-            racesafter.append(r)
 
-    if len(racesafter) < len(races):
-        racesafter = []
-
-    result["races"] = racesafter
+    result["races"] = races
     return result
 
 async def raceallroaches(races, u):
@@ -94,9 +84,18 @@ async def raceoneroach(h, sem, u):
     finish = False
     if int(h["gotrunned"]) <= int(h["race"]):
         q = 100 * int(h["roach"]["history"]) / (int(h["race"]) * int(h["roach"]["health"]))
+        beforerunned = h["gotrunned"]
         h["gotrunned"] = int(h["gotrunned"]) + math.ceil(int(h["roach"]["speed"]) / int(h["roach"]["weight"])) + math.ceil(q) + math.ceil(weather.get()) + int(nitroValue)
         h["roach"]["history"] = int(h["roach"]["history"]) + 1
         h["time"] = int(h["time"]) + 1
+
+        lasttime = time.time()
+        delta = lasttime - float(h["lasttime"])
+        print(delta)
+        if delta >= 0.5:
+            entry.save(h)
+        else:
+            h["gotrunned"] = beforerunned
     else:
         finish = True
     return {"id": h["roach"]["id"], "time": h["time"], "roach": h["roach"], "finish": finish, "race": h["race"], "gotrunned": h["gotrunned"], "lasttime": h["lasttime"]}
