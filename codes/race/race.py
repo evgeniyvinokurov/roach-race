@@ -39,11 +39,12 @@ def racestep(u):
     for r in races:
         if r["finish"]:    
             min = {}
-            min["time"] = 9999999
+            min["gotrunned"] = 0
 
             for r in races:
-                if int(r["time"]) < int(min["time"]):
+                if int(r["gotrunned"]) > int(min["gotrunned"]):
                     min = r
+
             for r in races:
                 if r["id"] != min["roach"]["id"]:
                     raceout(r["id"])
@@ -96,6 +97,9 @@ async def raceoneroach(h, sem, u):
             entry.save(h)
         else:
             h["gotrunned"] = beforerunned
+        
+        if int(h["gotrunned"]) > int(h["race"]):
+            finish = True
     else:
         finish = True
     return {"id": h["roach"]["id"], "time": h["time"], "roach": h["roach"], "finish": finish, "race": h["race"], "gotrunned": h["gotrunned"], "lasttime": h["lasttime"]}
