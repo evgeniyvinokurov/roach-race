@@ -91,7 +91,10 @@ def racein(roachid):
 
 @post('/raceuser/in/')
 def user_in():
-    user = users.login()
+    b = {}
+    for key, value in request.forms.allitems():
+        b[key] = value
+    user = users.login(b)
     return '{"user": ' + json.dumps(user) + '}'
 
 @post('/bet/')
