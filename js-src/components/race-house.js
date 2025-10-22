@@ -198,7 +198,7 @@ self.race = function(){
 					usersService.postEmail(function(user){
 						self.main.email = user.email;            
 						self.main.showEmail(user);
-					})
+					}, self.main.user.email)
 				}
 				self.main.bets = [];				
 

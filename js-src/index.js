@@ -67,11 +67,8 @@ self.loadModules = function(){
 
 self.initUser = function(){		
 	let email = self.getCookie("user") || "";
-	console.log(email, "EMAIL");
 
 	if (email){
-		console.log(email);
-
 		usersService.postEmail(function(user){
 			self.email = user.email;            
 			self.showEmail(user);
